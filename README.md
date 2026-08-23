@@ -60,7 +60,7 @@ Follow these documents in order:
 
 1. [Prerequisites](docs/00-prerequisites.md)
 2. [Architecture](docs/01-architecture.md)
-3. [VM setup](docs/02-vm-setup.md)
+3. [VM creation, networking, and SSH](docs/02-vm-setup.md)
 4. [Containerd setup](docs/03-containerd-setup.md)
 5. [Kubernetes installation](docs/04-kubernetes-installation.md)
 6. [Control-plane initialization](docs/05-control-plane-init.md)
