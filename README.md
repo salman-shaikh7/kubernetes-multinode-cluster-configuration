@@ -70,47 +70,12 @@ Follow these documents in order:
 10. [Troubleshooting](docs/09-troubleshooting.md)
 11. [Validation evidence](docs/10-validation-evidence.md)
 
-## Quick validation
+## Repository contents
 
-Run on the control plane:
-
-```bash
-kubectl get nodes -o wide
-kubectl get pods -A
-kubectl get svc,endpointslice
-```
-
-Expected node state:
-
-```text
-k8s-control-plane   Ready   control-plane
-k8s-worker-1        Ready   <none>
-k8s-worker-2        Ready   <none>
-```
-
-## Demo workload
-
-```bash
-kubectl apply -f manifests/nginx-demo.yaml
-kubectl get deployment,pods,service -l app=nginx-demo
-kubectl get endpointslice -l kubernetes.io/service-name=nginx-demo
-```
-
-The reusable manifest creates a three-replica nginx Deployment and a ClusterIP Service named `nginx-demo`.
-
-## Security note
-
-Kubeadm bootstrap tokens and certificate hashes expire and should not be committed. Generate a fresh worker join command when needed:
-
-```bash
-kubeadm token create --print-join-command
-```
-
-## Cleanup
-
-```bash
-kubectl delete -f manifests/nginx-demo.yaml
-```
+- `docs/` — the complete build, test, and troubleshooting guide
+- `manifests/calico-custom-resources.yaml` — the pinned Calico network configuration
+- `manifests/nginx-demo.yaml` — a reusable three-replica nginx Deployment and ClusterIP Service
+- `assets/screenshots/` — sanitized validation evidence from the running cluster
 
 ## License
 

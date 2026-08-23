@@ -1,5 +1,11 @@
 # Worker join
 
+## Protect bootstrap credentials
+
+Kubeadm bootstrap tokens and certificate hashes are temporary cluster credentials. Never commit a generated join command to this repository or publish it in screenshots and terminal output. Generate a fresh command when it is needed and allow unused tokens to expire.
+
+## Generate and run the join command
+
 Generate a fresh join command on the control plane:
 
 ```bash

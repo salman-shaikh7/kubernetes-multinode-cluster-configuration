@@ -1,6 +1,6 @@
 # Service and load-balancing test
 
-The demo creates three nginx Pods and exposes them with a ClusterIP Service.
+The reusable `manifests/nginx-demo.yaml` manifest creates a three-replica nginx Deployment and exposes its Pods through a ClusterIP Service named `nginx-demo`.
 
 ```bash
 kubectl apply -f manifests/nginx-demo.yaml
@@ -34,7 +34,7 @@ kubectl run curl-loop --rm -it --restart=Never --image=curlimages/curl -- \
 
 Responses should show different Pod hostnames. This demonstrates that Service traffic is distributed across ready endpoints; it does not guarantee strict round-robin ordering.
 
-Clean up:
+## Cleanup
 
 ```bash
 kubectl delete -f manifests/nginx-demo.yaml

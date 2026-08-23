@@ -4,8 +4,12 @@ Use this checklist after building the cluster. The snippets below describe the e
 
 ## 1. Nodes
 
+Run on the control plane:
+
 ```bash
 kubectl get nodes -o wide
+kubectl get pods -A
+kubectl get svc,endpointslice
 ```
 
 Confirm that all three nodes report `Ready` and use the expected internal addresses:
@@ -15,6 +19,14 @@ Confirm that all three nodes report `Ready` and use the expected internal addres
 | `k8s-control-plane` | `192.168.122.131` |
 | `k8s-worker-1` | `192.168.122.94` |
 | `k8s-worker-2` | `192.168.122.38` |
+
+The node list should have this overall state:
+
+```text
+k8s-control-plane   Ready   control-plane
+k8s-worker-1        Ready   <none>
+k8s-worker-2        Ready   <none>
+```
 
 ## 2. Control plane and Calico
 
@@ -39,7 +51,7 @@ Confirm that three nginx Pods are ready. Record their node and Pod-IP columns to
 ## 4. Service endpoints and DNS
 
 ```bash
-kubectl get service nginx-demo
+kubectl get deployment,pods,service -l app=nginx-demo
 kubectl get endpointslice -l kubernetes.io/service-name=nginx-demo
 kubectl run curl-test --rm -it --restart=Never \
   --image=curlimages/curl -- curl -s http://nginx-demo
