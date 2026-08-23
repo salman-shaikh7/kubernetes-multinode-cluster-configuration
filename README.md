@@ -35,24 +35,34 @@ For continuous hands-on experimentation, relying entirely on managed cloud servi
 | Virtualization | KVM + QEMU + libvirt |
 | Guest OS | Ubuntu |
 
-```text
-Linux laptop
-└── KVM / QEMU / libvirt
-    ├── k8s-control-plane (192.168.122.131)
-    ├── k8s-worker-1      (192.168.122.94)
-    └── k8s-worker-2      (192.168.122.38)
-         └── containerd → Kubernetes → Calico
+```mermaid
+flowchart TB
+    Host[Linux laptop<br/>KVM + QEMU + libvirt]
+    Net[libvirt NAT network<br/>192.168.122.0/24]
+
+    subgraph Cluster[Kubernetes v1.34.11]
+        CP[Control plane<br/>192.168.122.131<br/>API server · etcd · scheduler<br/>controller manager]
+        W1[Worker 1<br/>192.168.122.94<br/>kubelet · containerd]
+        W2[Worker 2<br/>192.168.122.38<br/>kubelet · containerd]
+
+        SVC[ClusterIP Service<br/>nginx-demo]
+        P1[nginx Pod]
+        P2[nginx Pod]
+        P3[nginx Pod]
+
+        CP -->|schedules workloads| W1
+        CP -->|schedules workloads| W2
+        SVC --> P1
+        SVC --> P2
+        SVC --> P3
+    end
+
+    Host --> Net
+    Net --> CP
+    Net --> W1
+    Net --> W2
+    W1 -. Calico Pod network .- W2
 ```
-
-## What was completed
-
-- Created one control-plane VM and two worker VMs on libvirt's NAT network.
-- Disabled swap and configured the required kernel modules and forwarding settings on every node.
-- Installed containerd and enabled its systemd cgroup driver.
-- Installed Kubernetes `v1.34.11` and initialized the control plane with kubeadm.
-- Installed Calico `v3.32.1` with a Pod CIDR of `10.244.0.0/16`.
-- Joined both workers and verified that all three nodes became `Ready`.
-- Deployed a three-replica nginx workload, exposed it through a ClusterIP Service, and verified service discovery and load distribution.
 
 ## Guide
 
