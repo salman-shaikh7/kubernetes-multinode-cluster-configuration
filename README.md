@@ -4,7 +4,7 @@ A reproducible three-node Kubernetes lab built on a Linux laptop with KVM, QEMU,
 
 ## Motivation
 
-Cloud providers make Kubernetes easy to provision, but that convenience comes with many layers of abstraction. A managed service can create the control plane, networking, worker nodes, and supporting infrastructure automatically. That is valuable in production, but it can hide how the individual components are installed, configured, connected, and troubleshooted.
+Cloud providers make Kubernetes easy to provision, but that convenience comes with many layers of abstraction. A managed service can create the control plane, networking, worker nodes, and supporting infrastructure automatically. That is valuable in production, but it can hide how the individual components are installed, configured, connected, and troubleshot.
 
 I built this cluster locally to learn Kubernetes from the ground up. Running it on my own virtual machines gives me full control over the operating system, container runtime, networking, control plane, and worker-node configuration. I can inspect every layer, break and rebuild the cluster, and understand what Kubernetes is doing behind the abstractions provided by managed cloud services. It also gives me a reusable learning environment without ongoing cloud infrastructure costs.
 
@@ -58,14 +58,17 @@ Linux laptop
 
 Follow these documents in order:
 
-1. [Architecture](docs/01-architecture.md)
-2. [VM setup](docs/02-vm-setup.md)
-3. [Containerd setup](docs/03-containerd-setup.md)
-4. [Kubernetes installation](docs/04-kubernetes-installation.md)
-5. [Control-plane initialization](docs/05-control-plane-init.md)
-6. [Calico networking](docs/06-calico-networking.md)
-7. [Worker join](docs/07-worker-join.md)
-8. [Service and load-balancing test](docs/08-service-load-balancing.md)
+1. [Prerequisites](docs/00-prerequisites.md)
+2. [Architecture](docs/01-architecture.md)
+3. [VM setup](docs/02-vm-setup.md)
+4. [Containerd setup](docs/03-containerd-setup.md)
+5. [Kubernetes installation](docs/04-kubernetes-installation.md)
+6. [Control-plane initialization](docs/05-control-plane-init.md)
+7. [Calico networking](docs/06-calico-networking.md)
+8. [Worker join](docs/07-worker-join.md)
+9. [Service and load-balancing test](docs/08-service-load-balancing.md)
+10. [Troubleshooting](docs/09-troubleshooting.md)
+11. [Validation evidence](docs/10-validation-evidence.md)
 
 ## Quick validation
 
@@ -89,7 +92,8 @@ k8s-worker-2        Ready   <none>
 
 ```bash
 kubectl apply -f manifests/nginx-demo.yaml
-kubectl get deployment,pods,service,endpointslice -l app=nginx-demo
+kubectl get deployment,pods,service -l app=nginx-demo
+kubectl get endpointslice -l kubernetes.io/service-name=nginx-demo
 ```
 
 The reusable manifest creates a three-replica nginx Deployment and a ClusterIP Service named `nginx-demo`.
@@ -107,3 +111,7 @@ kubeadm token create --print-join-command
 ```bash
 kubectl delete -f manifests/nginx-demo.yaml
 ```
+
+## License
+
+This project is available under the [MIT License](LICENSE).

@@ -4,10 +4,10 @@ Calico `v3.32.1` was installed with the Tigera operator. Run on the control plan
 
 ```bash
 kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.32.1/manifests/tigera-operator.yaml
-curl -fsSLO https://raw.githubusercontent.com/projectcalico/calico/v3.32.1/manifests/custom-resources.yaml
+kubectl create -f manifests/calico-custom-resources.yaml
 ```
 
-Edit `custom-resources.yaml` so the installation IP pool matches the kubeadm Pod CIDR:
+The version-controlled custom resource sets the installation IP pool to match the kubeadm Pod CIDR:
 
 ```yaml
 spec:
@@ -20,10 +20,9 @@ spec:
         nodeSelector: all()
 ```
 
-Apply it and watch Calico start:
+Watch Calico start:
 
 ```bash
-kubectl create -f custom-resources.yaml
 kubectl get tigerastatus
 kubectl get pods -n calico-system -w
 ```
