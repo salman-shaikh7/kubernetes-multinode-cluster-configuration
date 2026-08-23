@@ -2,6 +2,22 @@
 
 A reproducible three-node Kubernetes lab built on a Linux laptop with KVM, QEMU, libvirt, Ubuntu virtual machines, containerd, kubeadm, and Calico.
 
+## Motivation
+
+Cloud providers make Kubernetes easy to provision, but that convenience comes with many layers of abstraction. A managed service can create the control plane, networking, worker nodes, and supporting infrastructure automatically. That is valuable in production, but it can hide how the individual components are installed, configured, connected, and troubleshooted.
+
+I built this cluster locally to learn Kubernetes from the ground up. Running it on my own virtual machines gives me full control over the operating system, container runtime, networking, control plane, and worker-node configuration. I can inspect every layer, break and rebuild the cluster, and understand what Kubernetes is doing behind the abstractions provided by managed cloud services. It also gives me a reusable learning environment without ongoing cloud infrastructure costs.
+
+### Why not Minikube or another single-node setup?
+
+Tools such as Minikube are excellent for learning Kubernetes commands, deploying applications, and experimenting quickly. However, my goal is to understand how a realistic multi-node cluster is assembled and operated. A control plane with separate worker nodes more closely simulates a real environment and exposes important concepts such as node preparation, cluster bootstrapping, worker joins, cross-node Pod networking, service discovery, scheduling, and failure investigation.
+
+### Foundation for future projects
+
+This cluster is not the final project; it is the foundation for future distributed-systems projects. I plan to use it to build and study platforms such as Apache Airflow and Apache Spark, along with other clustered applications. Building those systems on infrastructure I control will help me understand how their components communicate, scale, recover, and behave across multiple machines.
+
+For continuous hands-on experimentation, relying entirely on managed cloud services would add cost and make low-level exploration more difficult. This local lab provides a cost-effective and repeatable environment where I can learn each system from first principles, while still developing skills that transfer to cloud-based Kubernetes environments.
+
 ## Cluster at a glance
 
 | Role | Hostname | libvirt NAT address |
