@@ -35,6 +35,11 @@ For continuous hands-on experimentation, relying entirely on managed cloud servi
 | Virtualization | KVM + QEMU + libvirt |
 | Guest OS | Ubuntu |
 
+
+## Architecture 
+![alt text](docs/Architecture.png)
+
+
 ```mermaid
 flowchart TB
     Host[Linux laptop<br/>KVM + QEMU + libvirt]
